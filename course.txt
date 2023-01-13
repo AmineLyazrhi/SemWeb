@@ -1,0 +1,38 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+@prefix territoire: <https://territoire.emse.fr/kg/ontology/> .
+
+schema:EventShape a sh:NodeShape ;
+    sh:targetClass schema:Event ;
+    sh:property [
+        sh:path schema:startDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:dateTime ;
+    ] ;
+    sh:property [
+        sh:path schema:endDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:dateTime ;
+    ] ;
+    sh:property [
+        sh:path schema:location ;
+        sh:minCount 1 ;
+        sh:or (
+            [sh:datatype xsd:string ; sh:pattern "Saint-Étienne|.UJM$"]
+            [sh:nodeKind sh:IRI; sh:pattern "^https://territoire.emse.fr/kg/emse/[a-z]+/[0-9]+[A-Z]+/[0-9]+$"  ]
+
+        )
+    ] ;
+    sh:property [
+        sh:path schema:description ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path schema:organized ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "UJM|EMSE|.*"
+    ] .
